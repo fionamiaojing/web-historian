@@ -38,8 +38,7 @@ exports.handleRequest = function (req, res) {
         } else {
           sendResponse(res, data);
         }
-        
-      })
+      });
     } else {
       //check if is archived or not
       // if archived : run fsRead
@@ -49,18 +48,16 @@ exports.handleRequest = function (req, res) {
         if (result) {
           fs.readFile(url, (err, data) => {
             if (err) {
-              console.log("error reading file");
+              console.log('error reading file');
             } else {
               sendResponse(res, data);
             }
           });
         } else {
-          sendResponse(res, "NOT FOUND", 404);
+          sendResponse(res, 'NOT FOUND', 404);
         }
       });
-    }
-    
-    
+    } 
   }
   
   

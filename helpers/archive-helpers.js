@@ -39,11 +39,13 @@ exports.addUrlToList = function(url, callback) {
 exports.isUrlArchived = function(url, callback) {
   fs.access(url, fs.constants.F_OK, 
     (err) => {
-      if (err) {callback(false);
-    } else {
-      callback(true);
+      if (err) {
+        callback(false);
+      } else {
+        callback(true);
+      }
     }
-  });  
+  );  
 };
 
 exports.downloadUrls = function(urls) {
