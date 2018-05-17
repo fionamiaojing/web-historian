@@ -75,19 +75,21 @@ exports.isUrlArchived = function(url, callback) {
 
 exports.downloadUrls = function(urls) {
   _.each(urls, function(url) {
-    https.get('https://' + url, (response) => {
-      let rawData = '';
-      response.on('data', (chunk) => {
-        rawData += chunk;
-      });
-      response.on('end', () => {
-        fs.writeFile(exports.paths.archivedSites + '/' + url, rawData, (err) => {
-          if (err) {
-            throw err;
-          }
+    if (url) {  
+      https.get('https://' + url, (response) => {
+        let rawData = '';
+        response.on('data', (chunk) => {
+          rawData += chunk;
+        });
+        response.on('end', () => {
+          fs.writeFile(exports.paths.archivedSites + '/' + url, rawData, (err) => {
+            if (err) {
+              throw err;
+            }
+          });
         });
       });
-    });
+    }
   });
 };
 

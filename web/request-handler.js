@@ -66,7 +66,14 @@ exports.handleRequest = function (req, res) {
     });
     req.on('end', function() {
       archive.addUrlToList(data.split('=')[1], function() {
-        sendResponse(res, 'Found', 302);
+        fs.readFile(archive.paths.siteAssets + '/loading.html', (err, data) => {
+          console.log(url);
+          if (err) {
+            console.log('error reading file');
+          } else {
+            sendResponse(res, data, 302);
+          }
+        });
       });
     });
     
