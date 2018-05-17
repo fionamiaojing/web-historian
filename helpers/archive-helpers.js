@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
+var https = require('https');
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -26,15 +27,36 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(callback) {
-  
+  // read through the list and do something on the array;
+  fs.readFile(exports.paths.list, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    callback(data.toString().split('\n'));
+  });
 };
 
 exports.isUrlInList = function(url, callback) {
-  
+  // get the url array
+  // loop through the array to see if url found
+  exports.readListOfUrls(function(array) {
+    if (array.includes(url)) {
+      callback(true);
+    } else {
+      callback(false);
+    }
+  });
 };
 
 exports.addUrlToList = function(url, callback) {
-  console.log(url);
+  fs.appendFile(exports.paths.list, url + '\n', (err) => {
+    if (err) {
+      console.log('error');
+    } else {
+      callback();
+    }
+  });
+  
   // if url is not archived & 
 };
 
@@ -52,6 +74,21 @@ exports.isUrlArchived = function(url, callback) {
 };
 
 exports.downloadUrls = function(urls) {
+  _.each(urls, function(url) {
+    https.get('https://' + url, (response) => {
+      let rawData = '';
+      response.on('data', (chunk) => {
+        rawData += chunk;
+      });
+      response.on('end', () => {
+        fs.writeFile(exports.paths.archivedSites + '/' + url, rawData, (err) => {
+          if (err) {
+            throw err;
+          }
+        });
+      });
+    });
+  });
 };
 
 

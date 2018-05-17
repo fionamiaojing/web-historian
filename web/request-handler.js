@@ -59,16 +59,17 @@ exports.handleRequest = function (req, res) {
       });
     } 
   } else if (req.method === 'POST') {
-    console.log(req);
-    archive.addUrlToList(req.url, function(url) {
-      fs.appendFile(archive.paths.list, url, (err) => {
-        if (err) {
-          console.log('error');
-        } else {
-          sendResponse(res, 'SEND', 201);
-        }
+    // console.log(req);
+    var data = '';
+    req.on('data', function(chunk) { // this callback will receive chunks of data which need to be concatenated
+      data += chunk;
+    });
+    req.on('end', function() {
+      archive.addUrlToList(data.split('=')[1], function() {
+        sendResponse(res, 'Found', 302);
       });
     });
+    
   }
   
    
