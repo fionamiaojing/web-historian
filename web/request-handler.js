@@ -43,8 +43,8 @@ exports.handleRequest = function (req, res) {
       //check if is archived or not
       // if archived : run fsRead
       // if not: send 404 not found;
-      var url = archive.paths.archivedSites + req.url;
-      archive.isUrlArchived(url, function(result) {
+      var url = archive.paths.archiveSites + req.url;
+      archive.isUrlArchived(req.url, function(result, url) {
         if (result) {
           fs.readFile(url, (err, data) => {
             if (err) {
@@ -59,7 +59,6 @@ exports.handleRequest = function (req, res) {
       });
     } 
   }
-  
   
    
   // res.end(archive.paths.list);

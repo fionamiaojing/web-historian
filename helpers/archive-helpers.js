@@ -37,12 +37,13 @@ exports.addUrlToList = function(url, callback) {
 };
 
 exports.isUrlArchived = function(url, callback) {
-  fs.access(url, fs.constants.F_OK, 
+  var newUrl = exports.paths.archivedSites + '/' + url;
+  fs.access(newUrl, fs.constants.F_OK, 
     (err) => {
       if (err) {
-        callback(false);
+        callback(false, newUrl);
       } else {
-        callback(true);
+        callback(true, newUrl);
       }
     }
   );  

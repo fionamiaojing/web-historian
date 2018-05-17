@@ -134,7 +134,6 @@ describe('archive helpers', function() {
         expect(exists).to.be.true;
         if (++counter === total) { done(); }
       });
-
       archive.isUrlArchived('www.notarchived.com', function (exists) {
         expect(exists).to.be.false;
         if (++counter === total) { done(); }
