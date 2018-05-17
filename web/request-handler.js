@@ -58,6 +58,17 @@ exports.handleRequest = function (req, res) {
         }
       });
     } 
+  } else if (req.method === 'POST') {
+    console.log(req);
+    archive.addUrlToList(req.url, function(url) {
+      fs.appendFile(archive.paths.list, url, (err) => {
+        if (err) {
+          console.log('error');
+        } else {
+          sendResponse(res, 'SEND', 201);
+        }
+      });
+    });
   }
   
    

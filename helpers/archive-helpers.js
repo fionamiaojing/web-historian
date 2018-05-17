@@ -34,6 +34,8 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
+  console.log(url);
+  // if url is not archived & 
 };
 
 exports.isUrlArchived = function(url, callback) {
