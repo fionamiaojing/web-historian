@@ -4,5 +4,5 @@ var archive = require('../helpers/archive-helpers');
 
 archive.readListOfUrls(function(urls) {
   console.log(urls);
- archive.downloadUrls(urls);
+  archive.downloadUrls(urls);
 });
